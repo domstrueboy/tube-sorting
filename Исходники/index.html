@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Сортировка трубок</title>
+    <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./node_modules/octicons/build/build.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+  	<div id="app" class="container-fluid">
+
+		<!-- Шапка -->
+  		<section class="head navbar navbar-light fixed-top" role="toolbar">
+  			<div class="input-group d-flex justify-content-between">
+				<div>
+					<select class="select_sensor" v-model="state.sensor">
+						<option v-for="sensorModel in state.sensors" >{{ sensorModel }}</option>
+					</select>
+					<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".addTube">
+						<img class="octicon" src="./node_modules/octicons/build/svg/plus.svg"> Добавить трубку
+					</button>
+				</div>
+				<div>
+					<a href="#section1">Пары</a> /
+					<a href="#section2">Наличие</a>
+				</div>
+				<component :is="inputs_template" :inputs="inputs" v-on:add="addTube()"></component>
+				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".archieve" v-on:click="viewArchieve()">
+					<img class="octicon" src="./node_modules/octicons/build/svg/eye.svg"> Просмотреть архив
+				</button>
+				<!-- Модальное окно просмотра архива -->
+				<div class="archieve modal fade" tabindex="-1" role="dialog" aria-labelledby="Архив" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="table table-sm table-responsive table-striped table-bordered table-hover">
+								<div class="thead thead-dark">
+									<component :is="archieve_template_th"></component>
+								</div>
+								<div class="tbody">
+									<component :is="archieve_template_tb" :arch_pair="arch_pair" :key="arch_pair.id1" v-for="(arch_pair, index) in archieve" v-on:return="returnPairFromArchieve(arch_pair, index)"></component>
+								</div>
+							</div>
+							<button class="btn btn-outline-secondary  btn-sm" data-dismiss="modal">
+								<img class="octicon" src="./node_modules/octicons/build/svg/x.svg" alt="Отмена"> Отмена
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>		
+					
+				
+			
+		</section>
+		
+		<section class="field row">
+			<div class="col-6">
+				<h5 id="section1">Таблица отбора:</h5>
+	
+				<div class="table table-sm table-responsive table-striped table-bordered table-hover">
+					
+					<div class="thead thead-dark">
+						<component :is="field_template_th" :state="state" :criteria="isByCriteria" :intersection="isByIntersection" v-on:sort-table-by-criteria="saveSortField('byCriteria')" v-on:sort-table-by-intersection="saveSortField('byIntersection')" v-on:save-criteria-max="saveCriteriaMax()"></component>
+					</div>
+	
+					<div class="tbody">
+						<component :is="field_template_tb" :item="item" :key="item.id1 + item.id2" v-for="item in field.sort(sortField)" v-on:add-pair="addPair(item)"></component>
+					</div>
+							
+				</div>
+			</div>
+	
+			<div class="col">
+				<h5>Подобранные пары:</h5>
+				<div class="table table-sm table-responsive table-striped table-bordered table-hover">
+					
+					<div class="thead thead-dark">
+						<component :is="pairs_template_th"></component>
+					</div>
+	
+					<div class="tbody">
+						<component :is="pairs_template_tb" :pair="pair" :key="pair._id" v-for="(pair, index) in pairs" v-on:remove-pair="removePair(pair, index)" v-on:add-pair-to-archieve="addPairToArchieve(pair, index)"></component>
+					</div>
+							
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<span>
+				<h5 id="section2">Трубки в наличии:</h5>
+			</span>
+			<span>
+				<label for="maxCriteriaForMeasurements">Макс. критерий для измерений трубки:</label>
+				<input v-model.lazy="state.maxCriteriaForMeasurements" id="maxCriteriaForMeasurements" type="text" @keyup.enter="saveMaxCriteriaForMeasurements">
+			</span>	
+			
+			<div class="table table-sm table-responsive table-striped table-bordered">
+		      	<div class="thead thead-dark">
+		        	<component :is="tubes_template_th" :state="state" v-on:save-sort="saveSort()"></component>
+		      	</div>
+
+		      	<div class="tbody">    	
+					<component :is="tubes_template_tb"
+							   :state="state"
+							   :inputs="inputs"
+							   :tube="tube"
+							   :key="tube.params[tube.selected].createTime.value"
+							   v-for="tube in tubes"
+							   v-if="tube.pair === '' && tube._id.includes(state.sort)"
+							   v-on:remove-tube="removeTube(tube._id)"
+							   v-on:edit-tube="editTube(tube)"
+							   v-on:add-measurement="addMeasurement(tube._id)"
+							   v-on:remove-measurement="removeMeasurement"></component>
+		      	</div>    
+			</div>
+		</section>
+	
+	</div>
+  </body>
+
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+  <script src='./node_modules/jquery/dist/jquery.js'></script>
+  <script src='./node_modules/tether/dist/js/tether.js'></script>
+  <script src='./node_modules/bootstrap/dist/js/bootstrap.js'></script>
+  <script src='./node_modules/vue/dist/vue.js'></script>
+
+  <script>
+  	require('./renderer.js');
+  </script>
+
+  <script>if (window.module) module = window.module;</script>
+</html>

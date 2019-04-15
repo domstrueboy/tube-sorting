@@ -1,0 +1,27 @@
+{
+  "name": "TubeSorting",
+  "version": "0.1.4",
+  "description": "Программа для подбора трубок Фломак",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron --js-flags=\"--harmony\" .",
+    "package-win": "electron-packager . --overwrite --asar --platform=win32 --arch=ia32 --prune=true --out=../"
+  },
+  "repository": "",
+  "keywords": [],
+  "author": "domstrueboy",
+  "license": "MIT",
+  "devDependencies": {
+    "colors": "^1.2.1",
+    "electron": "^1.8.4"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "electron-packager": "^11.1.0",
+    "jquery": "^3.3.1",
+    "lowdb": "^1.0.0",
+    "octicons": "^7.1.0",
+    "tether": "^1.4.3",
+    "vue": "^2.5.16"
+  }
+}

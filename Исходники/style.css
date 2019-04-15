@@ -1,0 +1,103 @@
+.head
+{
+	opacity: 1;
+	background-color: white;
+	border: 1px solid black;
+}
+.field
+{
+	margin-top: 50px;
+}
+.main-table, .table
+{
+	display: table;
+	border-collapse: collapse;
+}
+
+.thead
+{
+	display: table-header-group;
+}
+
+.tbody
+{
+ 	display: table-row-group;
+}
+
+tr
+{
+	display: table-row;
+}
+
+tr:nth-child(even)
+{
+	background-color: #e2e2e2;
+}
+
+th, td
+{
+	display: table-cell
+}
+
+th
+{
+	font-weight: normal;
+	font-size: 13px;
+}
+
+.container-fluid
+{
+	padding: 10px;
+}
+
+.select_sensor
+{
+	margin-right: 10px;
+}
+.modal-backdrop
+{
+	z-index: 1;
+}
+.modal-content
+{
+	padding: 10px;
+}
+
+.input-group 
+{
+	padding: 2px;
+}
+
+.btn-toolbar__addTube
+{
+	padding-top: 10px;
+}
+
+.btn:hover, .pointer:hover
+{
+	cursor: pointer;
+}
+
+/* Анимации */
+.fade-enter-active, .fade-leave-active
+{
+  transition: opacity .5s
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0
+}
+
+.tubes > th, .tubes > td
+{
+	width: 30px;
+}
+
+.table-for-edit-tube {
+	border: 4px solid rgb(0, 204, 255);
+}
+
+input[type="text"] {
+	border: 1px solid black;
+	padding-left: 5px;
+}
