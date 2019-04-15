@@ -12,16 +12,16 @@
   "author": "domstrueboy",
   "license": "MIT",
   "devDependencies": {
-    "colors": "^1.2.1",
-    "electron": "^1.8.4"
+    "colors": "^1.3.3",
+    "electron": "^4.1.4"
   },
   "dependencies": {
-    "bootstrap": "^4.0.0",
-    "electron-packager": "^11.1.0",
-    "jquery": "^3.3.1",
+    "bootstrap": "^4.3.1",
+    "electron-packager": "^13.1.1",
+    "jquery": "^3.4.0",
     "lowdb": "^1.0.0",
-    "octicons": "^7.1.0",
-    "tether": "^1.4.3",
-    "vue": "^2.5.16"
+    "octicons": "^8.5.0",
+    "tether": "^1.4.5",
+    "vue": "^2.6.10"
   }
 }
